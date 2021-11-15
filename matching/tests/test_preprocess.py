@@ -2,7 +2,9 @@ import pandas as pd
 
 from matching.preprocess import (
     add_epc_features,
+    add_ppd_features,
     casefold_epc_addresses,
+    casefold_ppd_addresses,
     extract_building_name,
     extract_building_number,
     extract_flat_number,
@@ -93,5 +95,48 @@ def test_add_epc_features() -> None:
     got = pd.DataFrame(addresses).pipe(add_epc_features)[
         ["building_number", "flat_number", "building_name"]
     ]
+    want = pd.DataFrame(features)
+    pd.testing.assert_frame_equal(got, want)
+
+
+def test_casefold_ppd_addresses() -> None:
+    ppd_addresses = pd.DataFrame(
+        [
+            {
+                "primary_addressable_object_name": "6a",
+                "secondary_addressable_object_name": "LOWER MAISONETTE",
+                "street": "SURREY AVENUE",
+            }
+        ]
+    )
+
+    got = ppd_addresses.pipe(casefold_ppd_addresses)
+
+    want = pd.DataFrame(
+        [
+            {
+                "primary_addressable_object_name": "6a",
+                "secondary_addressable_object_name": "lower maisonette",
+                "street": "surrey avenue",
+            }
+        ]
+    )
+
+    pd.testing.assert_frame_equal(got, want)
+
+
+def test_add_ppd_features() -> None:
+    tests = [
+        (
+            {
+                "primary_addressable_object_name": "21",
+                "secondary_addressable_object_name": "flat 4",
+            },
+            {"flat_number": "4"},
+        ),
+    ]
+
+    addresses, features = zip(*tests)
+    got = pd.DataFrame(addresses).pipe(add_ppd_features)[["flat_number"]]
     want = pd.DataFrame(features)
     pd.testing.assert_frame_equal(got, want)

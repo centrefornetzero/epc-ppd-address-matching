@@ -53,3 +53,20 @@ def add_epc_features(addresses: pd.DataFrame) -> pd.DataFrame:
     addresses["flat_number"] = addresses["address_line_1"].map(extract_flat_number)
     addresses["building_name"] = addresses["address_line_1"].map(extract_building_name)
     return addresses
+
+
+def casefold_ppd_addresses(addresses: pd.DataFrame) -> pd.DataFrame:
+    for col in [
+        "primary_addressable_object_name",
+        "secondary_addressable_object_name",
+        "street",
+    ]:
+        addresses[col] = addresses[col].str.casefold()
+    return addresses
+
+
+def add_ppd_features(addresses: pd.DataFrame) -> pd.DataFrame:
+    addresses["flat_number"] = addresses["secondary_addressable_object_name"].map(
+        extract_flat_number
+    )
+    return addresses
