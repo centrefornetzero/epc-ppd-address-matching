@@ -25,6 +25,9 @@ def extract_building_number(address_line: Optional[str]) -> Optional[str]:
 
 
 def extract_flat_number(address_line: str) -> Optional[str]:
+    if address_line is None:
+        return None
+
     if match := re.match(r"flat ([a-z0-9]+)", address_line):
         return match.group(1)
 
