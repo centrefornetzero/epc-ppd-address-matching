@@ -58,3 +58,10 @@ def add_flat_number_match(candidate_matches: pd.DataFrame) -> pd.DataFrame:
         candidate_matches["flat_number_ppd"]
     )
     return candidate_matches
+
+
+def add_similarity_score(candidate_matches: pd.DataFrame) -> pd.DataFrame:
+    feature_columns = [col for col in candidate_matches if col.startswith("_")]
+    score = candidate_matches[feature_columns].sum(axis=1) / len(feature_columns)
+    candidate_matches["_score"] = score
+    return candidate_matches

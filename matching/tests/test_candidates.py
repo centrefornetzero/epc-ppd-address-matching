@@ -4,6 +4,7 @@ from matching.candidates import (
     add_building_name_in_paon,
     add_building_number_in_paon,
     add_flat_number_match,
+    add_similarity_score,
     get_candidate_pairs,
 )
 
@@ -139,4 +140,16 @@ def test_add_flat_number_match() -> None:
     candidates, building_number_in_paon = zip(*tests)
     got = pd.DataFrame(candidates).pipe(add_flat_number_match)["_flat_number_match"]
     want = pd.Series(building_number_in_paon)
+    pd.testing.assert_series_equal(got, want, check_names=False)
+
+
+def test_add_similarity_score() -> None:
+    candidate_matches = pd.DataFrame(
+        {
+            "_feat_1": [True, False, False],
+            "_feat_2": [True, True, False],
+        }
+    )
+    got = candidate_matches.pipe(add_similarity_score)["_score"]
+    want = pd.Series([1.0, 0.5, 0.0])
     pd.testing.assert_series_equal(got, want, check_names=False)
