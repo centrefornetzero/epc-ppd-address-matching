@@ -24,7 +24,7 @@ def extract_building_number(address_line: Optional[str]) -> Optional[str]:
     return None
 
 
-def extract_flat_number(address_line: str) -> Optional[str]:
+def extract_flat_number(address_line: Optional[str]) -> Optional[str]:
     if address_line is None:
         return None
 
