@@ -1,3 +1,5 @@
+import argparse
+
 import pandas as pd
 
 from matching.candidates import (
@@ -14,13 +16,22 @@ from matching.preprocess import (
 )
 
 MIN_SCORE = 0.5
-POSTCODE_PREFIX = "E17 "
+
+
+def get_args(args=None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("epc_path")
+    parser.add_argument("ppd_path")
+    parser.add_argument("output_path")
+    return parser.parse_args(args)
+
 
 if __name__ == "__main__":
+    args = get_args()
+
     print("Loading EPC addresses...")
     epc_addresses = (
-        pd.read_parquet("data/epc_addresses")
-        .query("postcode.str.startswith(@POSTCODE_PREFIX)")
+        pd.read_parquet(args.epc_path)
         .pipe(casefold_epc_addresses)
         .pipe(add_epc_features)
     )
@@ -28,8 +39,7 @@ if __name__ == "__main__":
 
     print("Loading PPD addresses...")
     ppd_addresses = (
-        pd.read_parquet("data/ppd_addresses")
-        .query("postcode.str.startswith(@POSTCODE_PREFIX)")
+        pd.read_parquet(args.ppd_path)
         .pipe(casefold_ppd_addresses)
         .pipe(add_ppd_features)
     )
@@ -51,4 +61,4 @@ if __name__ == "__main__":
         f"{len(matches)} connected components containing {num_records_matched} records"
     )
 
-    tabulate_matches(matches).reset_index().to_parquet("matches.parquet")
+    tabulate_matches(matches).reset_index().to_parquet(args.output_path)
