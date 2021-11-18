@@ -109,6 +109,13 @@ def test_add_building_name_in_paon() -> None:
             },
             False,
         ),
+        (
+            {
+                "building_name": "windsor palace",
+                "primary_addressable_object_name": None,
+            },
+            False,
+        ),
     ]
     candidates, building_name_in_paon = zip(*tests)
     got = pd.DataFrame(candidates).pipe(add_building_name_in_paon)[
