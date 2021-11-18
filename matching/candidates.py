@@ -40,7 +40,7 @@ def add_building_name_in_paon(candidate_matches: pd.DataFrame) -> pd.DataFrame:
     def _building_name_in_paon(
         building_name: Optional[str], paon: Optional[str]
     ) -> bool:
-        if pd.isnull([building_name, paon]).any():
+        if pd.isna(building_name) or pd.isna(paon):
             return False
         return cast(str, building_name) in cast(str, paon)
 
