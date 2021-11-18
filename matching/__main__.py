@@ -1,5 +1,3 @@
-import pickle
-
 import pandas as pd
 
 from matching.candidates import (
@@ -7,7 +5,7 @@ from matching.candidates import (
     add_similarity_score,
     get_candidate_pairs,
 )
-from matching.matches import get_matches
+from matching.matches import get_matches, tabulate_matches
 from matching.preprocess import (
     add_epc_features,
     add_ppd_features,
@@ -53,5 +51,4 @@ if __name__ == "__main__":
         f"{len(matches)} connected components containing {num_records_matched} records"
     )
 
-    with open("matches.pickle", "wb") as f:
-        pickle.dump(matches, f, pickle.HIGHEST_PROTOCOL)
+    tabulate_matches(matches).reset_index().to_parquet("matches.parquet")
