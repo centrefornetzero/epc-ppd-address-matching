@@ -104,7 +104,7 @@ def test_add_building_name_in_paon() -> None:
         ),
         (
             {
-                "building_number": "1",
+                "building_name": None,
                 "primary_addressable_object_name": "32",
             },
             False,
