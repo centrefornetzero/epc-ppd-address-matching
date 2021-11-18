@@ -1,4 +1,5 @@
 import argparse
+from typing import Optional, Sequence
 
 import pandas as pd
 
@@ -18,7 +19,7 @@ from matching.preprocess import (
 MIN_SCORE = 0.5
 
 
-def get_args(args=None) -> argparse.Namespace:
+def get_args(args: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("epc_path")
     parser.add_argument("ppd_path")
