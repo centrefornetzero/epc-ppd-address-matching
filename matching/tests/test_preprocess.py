@@ -31,6 +31,7 @@ def test_extract_building_number() -> None:
 
 
 def test_extract_flat_number() -> None:
+    assert extract_flat_number(None) is None
     assert extract_flat_number("flat 15") == "15"
     assert extract_flat_number("flat 7") == "7"
     assert extract_flat_number("flat 1 queens court") == "1"
