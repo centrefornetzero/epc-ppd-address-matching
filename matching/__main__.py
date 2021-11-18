@@ -54,4 +54,4 @@ if __name__ == "__main__":
     )
 
     with open("matches.pickle", "wb") as f:
-        pickle.dump(list(matches), f, pickle.HIGHEST_PROTOCOL)
+        pickle.dump(matches, f, pickle.HIGHEST_PROTOCOL)
