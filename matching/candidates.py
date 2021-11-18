@@ -37,10 +37,12 @@ def add_building_number_in_paon(candidate_matches: pd.DataFrame) -> pd.DataFrame
 
 
 def add_building_name_in_paon(candidate_matches: pd.DataFrame) -> pd.DataFrame:
-    def _building_name_in_paon(building_name: Optional[str], paon: str) -> bool:
-        if pd.isnull(building_name):
+    def _building_name_in_paon(
+        building_name: Optional[str], paon: Optional[str]
+    ) -> bool:
+        if pd.isnull([building_name, paon]).any():
             return False
-        return cast(str, building_name) in paon
+        return cast(str, building_name) in cast(str, paon)
 
     candidate_matches["_building_name_in_paon"] = [
         _building_name_in_paon(building_name, paon)
