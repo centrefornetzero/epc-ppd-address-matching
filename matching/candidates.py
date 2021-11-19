@@ -22,8 +22,8 @@ def add_candidate_pair_features(candidate_matches: pd.DataFrame) -> pd.DataFrame
 def add_building_number_in_paon(candidate_matches: pd.DataFrame) -> pd.DataFrame:
     def _building_number_in_paon(
         building_number: Optional[str], paon: Optional[str]
-    ) -> bool:
-        return building_number == paon
+    ) -> int:
+        return 1 if building_number == paon else 0
 
     candidate_matches["_building_number_in_paon"] = [
         _building_number_in_paon(building_number, paon)
@@ -39,10 +39,10 @@ def add_building_number_in_paon(candidate_matches: pd.DataFrame) -> pd.DataFrame
 def add_building_name_in_paon(candidate_matches: pd.DataFrame) -> pd.DataFrame:
     def _building_name_in_paon(
         building_name: Optional[str], paon: Optional[str]
-    ) -> bool:
+    ) -> int:
         if building_name is None or paon is None:
-            return False
-        return building_name in paon
+            return 0
+        return 1 if building_name in paon else 0
 
     candidate_matches["_building_name_in_paon"] = [
         _building_name_in_paon(building_name, paon)
@@ -56,14 +56,16 @@ def add_building_name_in_paon(candidate_matches: pd.DataFrame) -> pd.DataFrame:
 
 def add_flat_number_match(candidate_matches: pd.DataFrame) -> pd.DataFrame:
     # https://github.com/pandas-dev/pandas/issues/20442#issuecomment-375247686
-    candidate_matches["_flat_number_match"] = candidate_matches["flat_number_epc"].eq(
-        candidate_matches["flat_number_ppd"]
+    candidate_matches["_flat_number_match"] = (
+        candidate_matches["flat_number_epc"]
+        .eq(candidate_matches["flat_number_ppd"])
+        .astype(int)
     )
     return candidate_matches
 
 
 def add_similarity_score(candidate_matches: pd.DataFrame) -> pd.DataFrame:
     feature_columns = [col for col in candidate_matches if col.startswith("_")]
-    score = candidate_matches[feature_columns].sum(axis=1) / len(feature_columns)
-    candidate_matches["_score"] = score
+    expr = "(" + " + ".join(feature_columns) + f") / {len(feature_columns)}"
+    candidate_matches["_score"] = candidate_matches.eval(expr)
     return candidate_matches
