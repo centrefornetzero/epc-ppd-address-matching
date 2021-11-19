@@ -68,14 +68,14 @@ def test_add_building_number_in_paon() -> None:
                 "building_number": "1",
                 "primary_addressable_object_name": "1",
             },
-            True,
+            1,
         ),
         (
             {
                 "building_number": "1",
                 "primary_addressable_object_name": "11",
             },
-            False,
+            0,
         ),
     ]
     candidates, building_number_in_paon = zip(*tests)
@@ -93,28 +93,28 @@ def test_add_building_name_in_paon() -> None:
                 "building_name": "treetops",
                 "primary_addressable_object_name": "treetops",
             },
-            True,
+            1,
         ),
         (
             {
                 "building_name": "cottage",
                 "primary_addressable_object_name": "32",
             },
-            False,
+            0,
         ),
         (
             {
                 "building_name": None,
                 "primary_addressable_object_name": "32",
             },
-            False,
+            0,
         ),
         (
             {
                 "building_name": "windsor palace",
                 "primary_addressable_object_name": None,
             },
-            False,
+            0,
         ),
     ]
     candidates, building_name_in_paon = zip(*tests)
@@ -129,19 +129,19 @@ def test_add_flat_number_match() -> None:
     tests = [
         (
             {"flat_number_epc": "1", "flat_number_ppd": "1"},
-            True,
+            1,
         ),
         (
             {"flat_number_epc": "1", "flat_number_ppd": "11"},
-            False,
+            0,
         ),
         (
             {"flat_number_epc": None, "flat_number_ppd": "1"},
-            False,
+            0,
         ),
         (
             {"flat_number_epc": None, "flat_number_ppd": None},
-            True,
+            1,
         ),
     ]
     candidates, building_number_in_paon = zip(*tests)
@@ -153,8 +153,8 @@ def test_add_flat_number_match() -> None:
 def test_add_similarity_score() -> None:
     candidate_matches = pd.DataFrame(
         {
-            "_feat_1": [True, False, False],
-            "_feat_2": [True, True, False],
+            "_feat_1": [1, 0, 0],
+            "_feat_2": [1, 1, 0],
         }
     )
     got = candidate_matches.pipe(add_similarity_score)["_score"]
