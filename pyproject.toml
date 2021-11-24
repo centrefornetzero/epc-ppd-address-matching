@@ -5,5 +5,7 @@ profile = "black"
 module = [
     "pandas.*",
     "networkx.*",
+    "farmhash.*",
+    "pyarrow.*",
 ]
 ignore_missing_imports = true

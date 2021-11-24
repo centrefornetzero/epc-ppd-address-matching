@@ -9,6 +9,7 @@ pyarrow = "*"
 networkx = "*"
 numexpr = "*"
 bottleneck = "*"
+pyfarmhash = "*"
 
 [dev-packages]
 pytest = "*"
