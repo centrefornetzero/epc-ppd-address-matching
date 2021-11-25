@@ -1,7 +1,7 @@
 FROM python:3.9.6-slim-buster AS dependencies
 
 RUN apt-get update && apt-get -y upgrade
-RUN apt-get -y install gcc parallel
+RUN apt-get -y install g++
 
 RUN pip install pipenv
 ENV PIPENV_VENV_IN_PROJECT=1
