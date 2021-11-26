@@ -8,7 +8,7 @@ from matching.candidates import (
     add_similarity_score,
     get_candidate_pairs,
 )
-from matching.matches import get_matches, tabulate_matches
+from matching.matches import get_matches, prefix_cluster_ids, tabulate_matches
 from matching.preprocess import (
     add_epc_features,
     add_ppd_features,
@@ -21,6 +21,14 @@ MIN_SCORE = 0.5
 
 def get_args(args: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--cluster-prefix",
+        type=str,
+        help="""
+    Prefixes every cluster ID with given string. Use when matching with parallel
+    processes so IDs are unique across all partitions.
+    """,
+    )
     parser.add_argument("epc_path")
     parser.add_argument("ppd_path")
     parser.add_argument("output_path")
@@ -62,4 +70,6 @@ if __name__ == "__main__":
         f"{len(matches)} connected components containing {num_records_matched} records"
     )
 
-    tabulate_matches(matches).reset_index().to_parquet(args.output_path)
+    tabulate_matches(matches).pipe(
+        prefix_cluster_ids, args.cluster_prefix
+    ).reset_index().to_parquet(args.output_path)
