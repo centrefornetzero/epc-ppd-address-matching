@@ -1,4 +1,4 @@
-from typing import Iterable, Iterator, Set
+from typing import Iterable, Iterator, Optional, Set
 
 import networkx as nx
 import pandas as pd
@@ -25,3 +25,11 @@ def tabulate_matches(matches: Iterable[Set[str]]) -> pd.Series:
     return pd.DataFrame(
         tabulated_matches, columns=["address_id", "cluster_id"]
     ).set_index("address_id")["cluster_id"]
+
+
+def prefix_cluster_ids(
+    tabulated_matches: pd.Series, prefix: Optional[str]
+) -> pd.Series:
+    if prefix is None:
+        return tabulated_matches
+    return prefix + tabulated_matches.astype(pd.StringDtype())
