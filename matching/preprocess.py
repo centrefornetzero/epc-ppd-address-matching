@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def extract_building_name(address_line: Optional[str]) -> Optional[str]:
-    if address_line is None or "flat" in address_line:
+    if address_line is None or "flat" in address_line or "apartment" in address_line:
         return None
 
     if match := re.match(r"[a-z\s]+", address_line):
@@ -28,7 +28,7 @@ def extract_flat_number(address_line: Optional[str]) -> Optional[str]:
     if address_line is None:
         return None
 
-    if match := re.match(r"flat ([a-z0-9]+)", address_line):
+    if match := re.match(r"(?:flat|apartment) ([a-z0-9]+)", address_line):
         return match.group(1)
 
     if match := re.match(r"([\w\s]+)(?=\sflat)", address_line):

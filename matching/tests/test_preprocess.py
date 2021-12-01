@@ -16,6 +16,7 @@ def test_extract_building_name() -> None:
     assert extract_building_name("wayfarer") == "wayfarer"
     assert extract_building_name("grey house") == "grey house"
     assert extract_building_name("flat a") is None
+    assert extract_building_name("apartment 32") is None
     assert extract_building_name("32 rochdale road") is None
     assert extract_building_name("32, rochdale road") is None
 
@@ -39,6 +40,7 @@ def test_extract_flat_number() -> None:
     assert extract_flat_number("basement flat") == "basement"
     assert extract_flat_number("first floor flat") == "first floor"
     assert extract_flat_number("fancy building name") is None
+    assert extract_flat_number("apartment 123") == "123"
 
 
 def test_casefold_epc_addresses() -> None:
