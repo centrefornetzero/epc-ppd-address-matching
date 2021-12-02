@@ -4,11 +4,11 @@ set -eu
 
 echo "==> Starting BQ extract jobs..."
 
-bq extract --location EU --destination_format PARQUET \
+bq extract --project_id "$GCP_PROJECT_ID" --location EU --destination_format PARQUET \
     "$GCP_PROJECT_ID:prod_epc_ppd_address_matching.dim_epc_addresses" \
     "gs://$SCRATCH_BUCKET_NAME/$USER/dim_epc_addresses-*.parquet"
 
-bq extract --location EU --destination_format PARQUET \
+bq extract --project_id "$GCP_PROJECT_ID" --location EU --destination_format PARQUET \
     "$GCP_PROJECT_ID:prod_epc_ppd_address_matching.dim_ppd_addresses" \
     "gs://$SCRATCH_BUCKET_NAME/$USER/dim_ppd_addresses-*.parquet"
 
