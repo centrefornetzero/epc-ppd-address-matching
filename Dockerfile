@@ -19,7 +19,7 @@ ENV PYTHONPATH=.
 FROM dependencies AS runtime
 
 COPY  . .
-ENTRYPOINT ["python", "-m", "app"]
+CMD ["./scripts/container_run.sh"]
 
 
 FROM dependencies AS testrunner
