@@ -47,7 +47,7 @@ You can use whatever identifier you want.
 We use the MD5 hash of each record in JSON format so that we can join the matches back to our data warehouse.
 In BigQuery, this is `md5(to_json_string(addresses))`.
 
-If you're a CNZ colleague, you can download the data using `./scripts/extract_from_bigquery.sh`.
+If you're a CNZ colleague, you can download the data from BigQuery.
 
 ## Matching Addresses
 
@@ -57,7 +57,9 @@ python -m matching epc_addresses/ ppd_addresses/ matches/
 
 On multicore machines you can get much faster performance by matching addresses in parallel.
 You need to partition the data using `python -m matching.partition` and have [GNU Parallel](https://www.gnu.org/software/parallel/) installed.
-See `scripts/parallel_match.sh`.
+
+We use [`./scripts/container_run.sh`](https://github.com/centrefornetzero/epc-ppd-address-matching/blob/main/scripts/container_run.sh) to extract and partition data, match records and finally load the matches back into BigQuery.
+A [Github Action](https://github.com/centrefornetzero/epc-ppd-address-matching/blob/main/.github/workflows/container.yaml) runs this in a container on GCP.
 
 # Acknowledgements
 
