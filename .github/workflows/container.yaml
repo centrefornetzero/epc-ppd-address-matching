@@ -37,3 +37,18 @@ jobs:
             "$ARTIFACT_REGISTRY"/docker/"${GITHUB_REPOSITORY#*/}":latest
           gcloud artifacts docker tags add "$ARTIFACT_REGISTRY"/docker/"${GITHUB_REPOSITORY#*/}":"$GITHUB_SHA"-testrunner \
             "$ARTIFACT_REGISTRY"/docker/"${GITHUB_REPOSITORY#*/}":latest-testrunner
+  match-job:
+    needs: build-test-push
+    runs-on: ubuntu-latest
+    # if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: google-github-actions/setup-gcloud@v0.2.0
+        with:
+          service_account_key: ${{ secrets.GCP_GITHUB_ACTION_SA_KEY }}
+      - name: Submit job
+        run: ./scripts/submit_job.sh
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_DATA_WAREHOUSE_PROJECT_ID }}
+          SCRATCH_BUCKET_NAME: ${{ secrets.GCP_SCRATCH_BUCKET_NAME }}
+          SERVICE_ACCOUNT: epc-ppd-matching-runner@${{ secrets.GCP_DATA_WAREHOUSE_PROJECT_ID }}.iam.gserviceaccount.com
