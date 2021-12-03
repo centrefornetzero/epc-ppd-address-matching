@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 cat > config.yml <<EOF
 workerPoolSpecs:
   machineSpec:
@@ -19,5 +21,6 @@ EOF
 
 gcloud ai custom-jobs create \
     --region europe-west2 \
-    --display-name epc-ppd-matching-test-job \
+    --display-name epc-ppd-address-matching \
     --config config.yml
+
