@@ -46,6 +46,7 @@ jobs:
       - uses: google-github-actions/setup-gcloud@v0.2.0
         with:
           service_account_key: ${{ secrets.GCP_GITHUB_ACTION_SA_KEY }}
+          project_id: ${{ secrets.GCP_DATA_WAREHOUSE_PROJECT_ID }}
       - name: Submit job
         run: ./scripts/submit_job.sh
         env:
