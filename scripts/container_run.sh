@@ -44,6 +44,6 @@ gsutil cp data/matches/matches-*.parquet "gs://$SCRATCH_BUCKET_NAME/$USER/"
 
 echo "==> Loading into BigQuery..."
 
-bq load --source_format=PARQUET --replace --location EU \
+bq load --project_id "$GCP_PROJECT_ID" --source_format=PARQUET --replace --location EU \
     src_epc_ppd_address_matching.matches \
     "gs://$SCRATCH_BUCKET_NAME/$USER/matches-*.parquet"
