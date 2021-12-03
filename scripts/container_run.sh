@@ -2,7 +2,7 @@
 
 set -eu
 
-echo "==> Erasing extract destination..."
+echo "==> Erasing bucket working directory..."
 
 gsutil rm "gs://$SCRATCH_BUCKET_NAME/$USER/*"
 
@@ -40,6 +40,4 @@ parallel --link --tagstring "Job {#}" \
 
 echo "==> Uploading to GCS..."
 
-PREFIX="$(date "+%Y-%m-%d")_$(git rev-parse --short HEAD)"
-
-gsutil cp data/matches/matches-*.parquet "gs://$SCRATCH_BUCKET_NAME/$USER/matches/$PREFIX/"
+gsutil cp data/matches/matches-*.parquet "gs://$SCRATCH_BUCKET_NAME/$USER/matches/"
