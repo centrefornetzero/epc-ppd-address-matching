@@ -40,4 +40,4 @@ parallel --link --tagstring "Job {#}" \
 
 echo "==> Uploading to GCS..."
 
-gsutil cp data/matches/matches-*.parquet "gs://$SCRATCH_BUCKET_NAME/$USER/matches/"
+gsutil cp data/matches/matches-*.parquet "gs://$SCRATCH_BUCKET_NAME/$USER/"
