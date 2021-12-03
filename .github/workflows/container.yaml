@@ -40,7 +40,7 @@ jobs:
   match-job:
     needs: build-test-push
     runs-on: ubuntu-latest
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - uses: google-github-actions/setup-gcloud@v0.2.0
