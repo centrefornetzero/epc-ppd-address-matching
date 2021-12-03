@@ -2,6 +2,10 @@
 
 set -eu
 
+echo "==> Erasing extract destination..."
+
+gsutil rm "gs://$SCRATCH_BUCKET_NAME/$USER/*"
+
 echo "==> Starting BQ extract jobs..."
 
 bq extract --project_id "$GCP_PROJECT_ID" --location EU --destination_format PARQUET \
