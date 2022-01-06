@@ -10,6 +10,7 @@ networkx = "*"
 numexpr = "*"
 bottleneck = "*"
 pyfarmhash = "*"
+google-cloud-bigquery = {extras = ["pandas"], version = "*"}
 
 [dev-packages]
 pytest = "*"
