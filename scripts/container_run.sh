@@ -4,7 +4,7 @@ set -eu
 
 echo "==> Erasing bucket working directory..."
 
-gsutil rm "gs://$SCRATCH_BUCKET_NAME/$USER/*"
+gsutil rm "gs://$SCRATCH_BUCKET_NAME/$USER/*" || true
 
 echo "==> Starting BQ query and extract jobs..."
 
