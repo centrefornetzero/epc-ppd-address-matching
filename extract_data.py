@@ -29,7 +29,7 @@ select distinct
 from `{GCP_PROJECT_ID}.prod_ppd.stg_ppd__england_wales_sales`
 """
 
-client = bigquery.Client()
+client = bigquery.Client(project=GCP_PROJECT_ID)
 
 print("Querying EPC table and exporting to GCS...")
 epc_query_job = client.query(EPC_QUERY)
