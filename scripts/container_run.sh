@@ -4,7 +4,9 @@ set -eu
 
 echo "==> Erasing bucket working directory..."
 
-if [[ $(gsutil ls "gs://$SCRATCH_BUCKET_NAME/$USER/*") ]]; then
+gsutil ls "gs://$SCRATCH_BUCKET_NAME/*" 1> /dev/null  # to check authorisation
+
+if gsutil ls "gs://$SCRATCH_BUCKET_NAME/$USER/*"; then
     gsutil rm "gs://$SCRATCH_BUCKET_NAME/$USER/*"
 fi
 
