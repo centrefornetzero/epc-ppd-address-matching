@@ -2,6 +2,8 @@
 
 set -eu
 
+printf '[Credentials]\ngs_service_key_file=%s' "${GOOGLE_APPLICATION_CREDENTIALS}" > ~/.boto
+
 echo "==> Erasing bucket working directory..."
 
 gsutil ls "gs://$SCRATCH_BUCKET_NAME/*" 1> /dev/null  # to check authorisation
