@@ -110,6 +110,45 @@ tests = [
         ],
         [{"epc_1", "ppd_1"}],
     ),
+    # Flat and building name in address lines 1 and 2 of EPC
+    (
+        [
+            {
+                "epc_id": "epc_1",
+                "address_line_1": "Flat 100",
+                "address_line_2": "Henry Palace Mansions",
+                "address_line_3": "Spring Gardens",
+                "postcode": "SW11 4DX",
+            },
+            {
+                "epc_id": "epc_2",
+                "address_line_1": "Flat 101",
+                "address_line_2": "Henry Palace Mansions",
+                "address_line_3": "Spring Gardens",
+                "postcode": "SW11 4DX",
+            },
+        ],
+        [
+            {
+                "ppd_id": "ppd_1",
+                "primary_addressable_object_name": "Henry Palace Mansions",
+                "secondary_addressable_object_name": "Flat 100",
+                "street": "Spring Gardens",
+                "postcode": "SW11 4DX",
+            },
+            {
+                "ppd_id": "ppd_2",
+                "primary_addressable_object_name": "Henry Palace Mansions",
+                "secondary_addressable_object_name": "Flat 101",
+                "street": "Spring Gardens",
+                "postcode": "SW11 4DX",
+            },
+        ],
+        [
+            {"epc_1", "ppd_1"},
+            {"epc_2", "ppd_2"},
+        ],
+    ),
 ]
 
 
