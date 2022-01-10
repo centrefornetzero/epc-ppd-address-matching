@@ -51,6 +51,6 @@ jobs:
         run: ./scripts/submit_job.sh
         env:
           GCP_PROJECT_ID: ${{ secrets.GCP_DATA_WAREHOUSE_PROJECT_ID }}
-          SCRATCH_BUCKET_NAME: ${{ secrets.GCP_SCRATCH_BUCKET_NAME }}
+          BUCKET_NAME: ${{ secrets.GCP_SCRATCH_BUCKET_NAME }}
           SERVICE_ACCOUNT: epc-ppd-matching-runner@${{ secrets.GCP_DATA_WAREHOUSE_PROJECT_ID }}.iam.gserviceaccount.com
           IMAGE_URI:  ${{ secrets.GCP_ARTIFACT_REGISTRY }}/docker/epc-ppd-address-matching:latest
