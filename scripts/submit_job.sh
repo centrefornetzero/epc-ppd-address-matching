@@ -12,8 +12,8 @@ workerPoolSpecs:
     env:
      - name: GCP_PROJECT_ID
        value: $GCP_PROJECT_ID
-     - name: SCRATCH_BUCKET_NAME
-       value: $SCRATCH_BUCKET_NAME
+     - name: BUCKET_NAME
+       value: $BUCKET_NAME
      - name: USER
        value: epc-ppd-matching
 serviceAccount: $SERVICE_ACCOUNT

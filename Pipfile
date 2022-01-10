@@ -11,6 +11,7 @@ numexpr = "*"
 bottleneck = "*"
 pyfarmhash = "*"
 google-cloud-bigquery = {extras = ["pandas"], version = "*"}
+google-cloud-storage = "*"
 
 [dev-packages]
 pytest = "*"
