@@ -54,7 +54,15 @@ def add_epc_features(addresses: pd.DataFrame) -> pd.DataFrame:
         building_number_address_line_2
     )
     addresses["flat_number"] = addresses["address_line_1"].map(extract_flat_number)
-    addresses["building_name"] = addresses["address_line_1"].map(extract_building_name)
+    building_name_address_line_1 = addresses["address_line_1"].map(
+        extract_building_name
+    )
+    building_name_address_line_2 = addresses["address_line_2"].map(
+        extract_building_name
+    )
+    addresses["building_name"] = building_name_address_line_1.combine_first(
+        building_name_address_line_2
+    )
     return addresses
 
 

@@ -92,6 +92,10 @@ def test_add_epc_features() -> None:
             },
             {"building_name": "the mansion", "building_number": "1"},
         ),
+        (
+            {"address_line_1": "flat 100", "address_line_2": "nice mansions"},
+            {"building_name": "nice mansions", "flat_number": "100"},
+        ),
     ]
 
     addresses, features = zip(*tests)
