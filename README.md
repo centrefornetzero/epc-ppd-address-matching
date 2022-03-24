@@ -1,10 +1,13 @@
-# epc-ppd-address-matching
+# `epc-ppd-address-matching`
 
-Match addresses in the [Energy Performance Certificates](https://epc.opendatacommunities.org/) (EPC) and [HM Land Registry Price Paid Data](https://www.gov.uk/government/collections/price-paid-data) (PPD).
+Match addresses in the [Energy Performance Certificates](https://epc.opendatacommunities.org/) (EPC) dataset and [HM Land Registry Price Paid Data](https://www.gov.uk/government/collections/price-paid-data) (PPD).
+A simple, but effective, rule-based approach.
+
 
 ## Installation
 
-You need `pipenv`.
+You need Python 3.9 and [`pipenv`](https://github.com/pypa/pipenv).
+If you don't have them, see [our instructions for macOS](https://gist.github.com/tomwphillips/715d4fd452ef5d52b4708c0fc5d4f30f).
 
 1. Clone this repo.
 2. `pipenv sync --dev` to install dependencies.
@@ -16,11 +19,11 @@ Alternatively, if you are familiar with Docker you can use the included Dockerfi
 ## Data Requirements
 
 You need the EPC and PPD addresses in Parquet format.
-At CNZ we use BigQuery and dbt to transform data.
-We hope to make our dbt sources and models for the EPC and PPD datasets public soon.
-Until then, you need to download each dataset and produce Parquet files with the columns below, e.g. using [`pandas.DataFrame.to_parquet`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_parquet.html).
+At CNZ we manage EPC and PPD [using dbt in BigQuery](https://github.com/centrefornetzero/domestic-heating-data).
+You can use that code to clean up EPC and PPD and transform it into the schema required for matching.
+Alternatively you can produce Parquet files with the following schemas however you want (all columns are strings).
 
-PPD:
+### PPD schema
 
 ```
 ppd_id
@@ -31,7 +34,7 @@ town_city
 postcode
 ```
 
-EPC:
+### EPC schema
 
 ```
 epc_id
@@ -42,12 +45,12 @@ post_town
 postcode
 ```
 
+### Record IDs
+
 `ppd_id` and `epc_id` must uniquely identify each address record across **both** datasets.
 You can use whatever identifier you want.
 We use the MD5 hash of each record in JSON format so that we can join the matches back to our data warehouse.
 In BigQuery, this is `md5(to_json_string(addresses))`.
-
-If you're a CNZ colleague, you can download the data from BigQuery.
 
 ## Matching Addresses
 
@@ -63,6 +66,4 @@ A [Github Action](https://github.com/centrefornetzero/epc-ppd-address-matching/b
 
 # Acknowledgements
 
-> Tange, O. (2021, November 22). GNU Parallel 20211122 ('Peng Shuai'). Zenodo. https://doi.org/10.5281/zenodo.5719513
-
-Reminder for future us: email Ole Tange a copy of any articles we publish as a result of this work.
+Tange, O. (2021, November 22). GNU Parallel 20211122 ('Peng Shuai'). Zenodo. https://doi.org/10.5281/zenodo.5719513
